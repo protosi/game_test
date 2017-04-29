@@ -2,7 +2,8 @@ server:
   context-path: /GameTest
   port: 80
   
-  spring:
+spring:
+  mvc:
     view:
-        prefix: /WEB-INF/jsp/
-        suffix: .jsp
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
