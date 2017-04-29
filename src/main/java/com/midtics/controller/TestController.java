@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 	
 	@RequestMapping(value="test")
-	public String test()
+	public String testFunction()
 	{
 		return "test";
 	}
