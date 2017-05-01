@@ -10,5 +10,5 @@ import com.midtics.mybatis.domain.EcosRawLogAll;
 public interface EcosRawLogAllMapper {
 
 	List<EcosRawLogAll> selectAll();
-
+	int insertBatch(List<EcosRawLogAll> list);
 }

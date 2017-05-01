@@ -1,6 +1,8 @@
 server:
   context-path: /GameTest
   port: 80
+  tomcat:
+    max-threads: 50
   
 spring:
   mvc:
@@ -11,7 +13,7 @@ spring:
   datasource:
     username: stat_user
     password: stateoqkr!@
-    url: jdbc:mysql://13.124.121.91:3306/db_stock      
+    url: jdbc:mysql://13.124.121.91:3306/db_stock?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf8      
 #      
 # Mybatis Configuration
 # http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
@@ -21,4 +23,7 @@ spring:
 mybatis:
   config-location: classpath:mybatis-config.xml
 
-  
+
+logging:
+  level:
+    com.midtics.util.BOKUploader: debug

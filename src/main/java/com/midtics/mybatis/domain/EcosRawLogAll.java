@@ -13,6 +13,27 @@ public class EcosRawLogAll {
 	String TIME;
 	String DATA_VALUE;
 	String CYCLE;
+	public EcosRawLogAll()
+	{}
+	public EcosRawLogAll(String statcode,String  itemcode,String  strTime,
+			String statname,String  itemname1,String  itemname2,String  itemname3,
+			String itemname,String  unitname,String  cycle, String curr_data)
+	{
+		STAT_CODE = statcode;
+		
+		ITEM_CODE = itemcode;
+		TIME = strTime;
+		STAT_NAME = statname;
+		ITEM_NAME1 = itemname1;
+		
+		ITEM_NAME2 = itemname2;
+		ITEM_NAME3 = itemname3;
+		ITEM_NAME = itemname;
+		UNIT_NAME = unitname;
+		
+		CYCLE = cycle;
+		DATA_VALUE = curr_data;
+	}
 	public String getSTAT_CODE() {
 		return STAT_CODE;
 	}

@@ -18,5 +18,8 @@ public class EcosService {
 	{
 		return mapper.selectAll();
 	}
-
+	public int insertBatch(List<EcosRawLogAll> list)
+	{
+		return mapper.insertBatch(list);
+	}
 }
