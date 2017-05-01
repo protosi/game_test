@@ -1,12 +1,18 @@
 package com.midtics.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.midtics.controller.service.EcosService;
+
 @Controller
 public class TestController {
+	
+	@Autowired
+	EcosService service;
 	
 	@RequestMapping(value="/test")
 	public String testFunction(Model model)
@@ -16,8 +22,8 @@ public class TestController {
 	}
 	@RequestMapping(value="/")
 	@ResponseBody
-	public String index(Model model)
+	public Object index(Model model)
 	{
-		return "test_hello";
+		return service.selectAll();
 	}
 }
