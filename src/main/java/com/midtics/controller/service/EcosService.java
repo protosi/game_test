@@ -18,6 +18,10 @@ public class EcosService {
 	{
 		return mapper.selectAll();
 	}
+	public List<EcosRawLogAll> find(String stat_code,String item_code, String start_date, String end_date)
+	{
+		return mapper.find(stat_code, item_code, start_date, end_date);
+	}
 	public int insertBatch(List<EcosRawLogAll> list)
 	{
 		return mapper.insertBatch(list);

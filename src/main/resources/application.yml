@@ -13,13 +13,20 @@ spring:
   datasource:
     username: stat_user
     password: stateoqkr!@
-    url: jdbc:mysql://13.124.121.91:3306/db_stock?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf8      
+    url: jdbc:mysql://13.124.121.91:3306/db_stock?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf8   
+
+# Rserve Connection 
+R:
+  host: 52.78.72.42
+  port: 6311
+  id: user
+  password: midew23kK!
+         
 #      
 # Mybatis Configuration
 # http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
 # https://github.com/mybatis/spring-boot-starter/blob/master/mybatis-spring-boot-samples/mybatis-spring-boot-sample-xml/src/main/resources/application.properties
 # 
-
 mybatis:
   config-location: classpath:mybatis-config.xml
 
