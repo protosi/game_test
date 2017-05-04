@@ -1,4 +1,4 @@
-package com.midtics.controller.service;
+package com.midtics.service;
 
 import java.util.List;
 

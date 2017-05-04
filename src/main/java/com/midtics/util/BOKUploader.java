@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.midtics.controller.service.EcosRawLogService;
-import com.midtics.controller.service.EcosStatListService;
 import com.midtics.mybatis.domain.EcosRawLogAll;
 import com.midtics.mybatis.domain.EcosStatList;
+import com.midtics.service.EcosRawLogService;
+import com.midtics.service.EcosStatListService;
 
 @Component
 public class BOKUploader implements Runnable {

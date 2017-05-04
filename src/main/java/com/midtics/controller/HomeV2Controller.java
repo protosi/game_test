@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.midtics.controller.service.EcosRawLogService;
-import com.midtics.controller.service.EcosStatLogService;
 import com.midtics.mybatis.domain.EcosRawLogAll;
+import com.midtics.service.EcosRawLogService;
+import com.midtics.service.EcosStatLogService;
 import com.midtics.util.RConnector;
 
 

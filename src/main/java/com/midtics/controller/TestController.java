@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.midtics.controller.service.EcosRawLogService;
+import com.midtics.service.EcosRawLogService;
 import com.midtics.util.RConnector;
 
 @Controller
