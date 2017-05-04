@@ -14,30 +14,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.midtics.mybatis.mapper.EcosRawLogAllMapper">
-    <select id="selectAll" resultType="EcosRawLogAll">
-        select * from tb_ecos_raw_log_all
+<mapper namespace="com.midtics.mybatis.mapper.EcosStatLogMapper">
+    <select id="selectLastOne" resultType="EcosStatLog">
+        SELECT * FROM db_stock.tb_stat_result
+         where `category` = #{category}
+         order by id desc limit 0, 1
     </select>
-    <select id="find" resultType="EcosRawLogAll">
-    	select * from tb_ecos_raw_log_all
-    	where
-    	`STAT_CODE` = #{stat_code}
-    	AND `ITEM_CODE` = #{item_code}
-    	AND `TIME` >= #{start_date}
-    	AND #{end_date} >= `TIME`     
-    </select>
-    <insert id="insertBatch" parameterType="EcosRawLogAll">
-    	INSERT IGNORE INTO `db_stock`.`tb_ecos_raw_log_all`
-			(`STAT_CODE`, `STAT_NAME`, `ITEM_CODE`,
-			`ITEM_NAME`, `ITEM_NAME1`, `ITEM_NAME2`,
-			`ITEM_NAME3`, `UNIT_NAME`, `TIME`, `DATA_VALUE`,
-			`CYCLE`)
+
+    <insert id="insert">
+    	INSERT IGNORE INTO `db_stock`.`tb_stat_result`
+			(`category`, `value`, `reg_date`)
 			VALUES
-    		<foreach item="rawLog" index="index" collection="list" open="" separator=", " close="">
-	    		(#{rawLog.STAT_CODE}, #{rawLog.STAT_NAME}, #{rawLog.ITEM_CODE},
-				 #{rawLog.ITEM_NAME}, #{rawLog.ITEM_NAME1}, #{rawLog.ITEM_NAME2},
-				 #{rawLog.ITEM_NAME3}, #{rawLog.UNIT_NAME}, #{rawLog.TIME}, #{rawLog.DATA_VALUE},
-				 #{rawLog.CYCLE})
-    		</foreach>
+	    	(#{category}, #{value}, now())
     </insert>
 </mapper>

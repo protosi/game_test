@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.midtics.controller.service.EcosService;
+import com.midtics.controller.service.EcosRawLogService;
+import com.midtics.controller.service.EcosStatLogService;
 import com.midtics.mybatis.domain.EcosRawLogAll;
 import com.midtics.util.RConnector;
 
@@ -36,7 +36,10 @@ import com.midtics.util.RConnector;
 public class HomeV2Controller {
 
 	@Autowired
-	EcosService serviceEcosAllData;
+	EcosRawLogService serviceEcosAllData;
+	
+	@Autowired
+	EcosStatLogService serviceEcosStatLog;
 	
 	@Autowired
 	RConnector rconnector;
@@ -44,6 +47,7 @@ public class HomeV2Controller {
 	private static final Logger log = LoggerFactory.getLogger(HomeV2Controller.class);
 
 	@RequestMapping("/monthly")
+	@ResponseBody
 	String monthly(HttpServletRequest request, HttpServletResponse response) 
 	{
 		response.setCharacterEncoding("utf-8");
@@ -127,6 +131,8 @@ public class HomeV2Controller {
 		rconnector.getConnection().rm(envName);		
 		rconnector.close();
 		
+		serviceEcosStatLog.insert("monthly",json.toString());
+		
 		return json.toString();
 	}
 	
@@ -147,27 +153,13 @@ public class HomeV2Controller {
 	}
 	
 	@RequestMapping("/")
-	String index(Model model) throws RserveException, REXPMismatchException{
+	@ResponseBody
+	Object index(Model model) throws RserveException, REXPMismatchException{
 
-		try
-		{
-			RConnection c = new RConnection();
-			double[] d = c.eval("rnorm(100)").asDoubles();
-			REXP x = c.eval("R.version.string");
-			model.addAttribute("version", x.asString());
-			model.addAttribute("datas", d);
-		}
-		catch(RserveException e)
-		{
-			model.addAttribute("datas", e.getStackTrace());
-		}
-		catch(REXPMismatchException e)
-		{
-			model.addAttribute("datas", e.getStackTrace());
-		}
+		//serviceEcosStatLog.insert("monthly","test");
 		
 		
-		return "index";
+		return serviceEcosStatLog.selectLastOne("monthly");
 	}
 	
 }

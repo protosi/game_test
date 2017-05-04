@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.midtics.controller.service.EcosService;
+import com.midtics.controller.service.EcosRawLogService;
 import com.midtics.util.RConnector;
 
 @Controller
@@ -20,7 +20,7 @@ public class TestController {
 	RConnector rconnect;
 	
 	@Autowired
-	EcosService service;
+	EcosRawLogService service;
 	
 	@RequestMapping(value="/test")
 	public String testFunction(Model model)

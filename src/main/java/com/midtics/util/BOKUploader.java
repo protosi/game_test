@@ -13,40 +13,68 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.midtics.controller.service.EcosService;
+import com.midtics.controller.service.EcosRawLogService;
+import com.midtics.controller.service.EcosStatListService;
 import com.midtics.mybatis.domain.EcosRawLogAll;
+import com.midtics.mybatis.domain.EcosStatList;
 
 @Component
-@Scope(value = "singleton")
 public class BOKUploader implements Runnable {
 	
 	private final Log logger = LogFactory.getLog(getClass());
 	
-	JSONObject apiList = null;
+	@Autowired
+	EcosStatListService serviceEcosStatList;
 	
 	@Autowired
-	EcosService service;
+	EcosRawLogService serviceEcosRawLog;
+	
+	List <EcosStatList> apiList = null;
 	
 	
-	public BOKUploader()
+	
+	
+	
+
+	
+	
+	public void insertEcosStatList() throws JSONException
 	{
-		loadApiList();
-	}
-	
-	protected void loadApiList()
-	{
-		if(apiList == null)
+		String json = BOKConnector.getInstance().getEcosStat();
+		JSONObject apiList = new JSONObject(json);
+		if(!apiList.has("StatisticTableList"))
 		{
-			String json = BOKConnector.getInstance().getEcosStat();
-			logger.debug(json);
-			try {
-				apiList = new JSONObject(json);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			return;
+		}
+		if(!apiList.getJSONObject("StatisticTableList").has("row"))
+		{
+			return;
+		}
+		
+		JSONArray rows = apiList.getJSONObject("StatisticTableList").getJSONArray("row");
+		
+
+		for(int i = 0 ; i < rows.length() ; i++)
+		{
+			if(rows.getJSONObject(i).has("SRCH_YN"))
+			{
+				if(rows.getJSONObject(i).getString("SRCH_YN").equals("Y"))
+				{
+					if(rows.getJSONObject(i).has("STAT_CODE") && rows.getJSONObject(i).has("CYCLE") && rows.getJSONObject(i).has("STAT_NAME"))
+					{
+						String statCode = rows.getJSONObject(i).getString("STAT_CODE");
+						String statName = rows.getJSONObject(i).getString("STAT_NAME");
+						String cycle = rows.getJSONObject(i).getString("CYCLE");
+						serviceEcosStatList.insert(statCode, statName, cycle);
+					}
+				}
 			}
 		}
+		
 	}
+	
+	
+	
 	public void loadApiStat(String stat_code, String cycle)
 	{
 		try {
@@ -59,6 +87,8 @@ public class BOKUploader implements Runnable {
 	
 	protected void loadApiStatAll()
 	{
+		apiList = serviceEcosStatList.selectY();
+		
 		try {
 			processApiListAll();
 		} catch (JSONException e) {
@@ -69,40 +99,24 @@ public class BOKUploader implements Runnable {
 	public void processApiListAll() throws JSONException
 	{
 
-		if(!apiList.has("StatisticTableList"))
+		if(apiList == null)
 		{
 			return;
 		}
-		if(!apiList.getJSONObject("StatisticTableList").has("row"))
-		{
-			return;
-		}
-		JSONArray rows = apiList.getJSONObject("StatisticTableList").getJSONArray("row");
 		
-
-		for(int i = 0 ; i < rows.length() ; i++)
+		for(int i = 0 ; i < apiList.size() ; i++)
 		{
-			if(rows.getJSONObject(i).has("SRCH_YN"))
-			{
-				if(rows.getJSONObject(i).getString("SRCH_YN").equals("Y"))
-				{
-					if(rows.getJSONObject(i).has("STAT_CODE") && rows.getJSONObject(i).has("CYCLE"))
-					{
-						String statCode = rows.getJSONObject(i).getString("STAT_CODE");
-						String cycle = rows.getJSONObject(i).getString("CYCLE");
+			String statCode = apiList.get(i).getSTAT_CODE();
+			String cycle = apiList.get(i).getCYCLE();
 						
-						try{
-							processItemList(statCode,cycle);
-						}
-						catch(Exception e){
-							e.printStackTrace();
-						}
-					}
-				}
+			try
+			{
+				processItemList(statCode,cycle);
+			}
+			catch(Exception e){
+				e.printStackTrace();
 			}
 		}
-		
-		
 	}
 	
 	
@@ -230,7 +244,7 @@ public class BOKUploader implements Runnable {
 			list.add(new EcosRawLogAll(statcode, itemcode, strTime, statname, itemname1, itemname2, itemname3, itemname, unitname, cycle, curr_data));
 		}
 		//logger.debug(statcode + "(" + statname +") : " + itemname +" / "+ itemname1 +" / "+  itemname2 +" / "+ itemname3  +" / "+unitname +" / "+ cycle +" / "+list.size());
-		service.insertBatch(list);
+		serviceEcosRawLog.insertBatch(list);
 			
 		
 	}

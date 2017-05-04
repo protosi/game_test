@@ -2,6 +2,9 @@ package com.midtics.mybatis.domain;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Service;
+
+
 public class EcosStatLog {
 	
 	int id;
