@@ -22,7 +22,7 @@ public class EcosScheduler  implements ApplicationListener<ContextRefreshedEvent
 	@Scheduled(cron = "0 0 0 * * *")
     public void reportCurrentTime() {
 		Thread t = new Thread(bokUploader);
-		//t.start();
+		t.start();
 		
 		Thread t1 = new Thread(statJob);
 		t1.start();
