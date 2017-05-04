@@ -11,18 +11,13 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-config.dtd">
-<configuration>
-    <typeAliases>
-        <package name="com.midtics.mybatis.domain"/>
-    </typeAliases>
-    <mappers>
-        <mapper resource="mybatis/mapper/raw_log.xml"/>
-        <mapper resource="mybatis/mapper/stat_log.xml"/>
-        <mapper resource="mybatis/mapper/stat_list.xml"/>
-        <mapper resource="mybatis/mapper/stat_job_category.xml"/>
-        <mapper resource="mybatis/mapper/stat_job_item.xml"/>
-    </mappers>
-</configuration>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.midtics.mybatis.mapper.EcosStatJobItemMapper">
+    <select id="selectY" resultType="EcosStatJobItem">
+        SELECT * FROM db_stock.tb_stat_job_item
+         where `is_active` = 'y' and
+         `category_id` = #{category_id}
+    </select>
+</mapper>

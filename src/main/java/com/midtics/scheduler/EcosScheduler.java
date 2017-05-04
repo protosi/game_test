@@ -7,6 +7,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.midtics.component.EcosStatJobComponent;
 import com.midtics.util.BOKUploader;
 
 @Component
@@ -15,10 +16,16 @@ public class EcosScheduler  implements ApplicationListener<ContextRefreshedEvent
 	@Autowired
 	BOKUploader bokUploader;
 	
+	@Autowired
+	EcosStatJobComponent statJob;
+	
 	@Scheduled(cron = "0 0 0 * * *")
     public void reportCurrentTime() {
 		Thread t = new Thread(bokUploader);
-		t.start();
+		//t.start();
+		
+		Thread t1 = new Thread(statJob);
+		t1.start();
 		
     }
 	

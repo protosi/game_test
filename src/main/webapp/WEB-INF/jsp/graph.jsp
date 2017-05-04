@@ -33,7 +33,7 @@ body {
 
 $(document).ready(function(){
 	//makeGraph();
-	$.ajax("/GameTest/v2/monthly").done(function(data){
+	$.ajax('/GameTest/v2/getStatData?category=<c:out value="${category}"/>').done(function(data){
 		if(typeof data == 'string' )
 		{
 			data = JSON.parse(data);

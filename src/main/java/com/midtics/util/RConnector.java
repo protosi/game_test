@@ -36,10 +36,7 @@ public class RConnector {
 	String Passwd;
 	
 	Rsession c = null;
-	public RConnector()
-	{
-		//initialize();
-	}
+
 
 	public void initialize() throws RserveException
 	{
@@ -144,8 +141,74 @@ public class RConnector {
 			c.eval(strRSource);
 		}
 	}
+	/*public JSONObject forecastVAR(String type, int h, String envName, String ...vars) throws REXPMismatchException, JSONException, ParseException
+	{
+		String args = "";
+		for(int i = 0 ; i < vars.length ; i++)
+		{
+			if(i != 0)
+			{
+				args += ", ";
+			}
+			args += envName +"$"+ vars[i]+"$value";
+		}
+		String rawName = envName +"$raw.df";
+		String varName = envName + "$var";
+		c.eval(rawName +"<-data.frame("+args+")");
+		
+		c.eval(varName+" <-forecastVAR(" +rawName+ ", " +type+"'," + h+")");
+		
+		JSONObject obj = new JSONObject();
+		
+		for(int i = 0 ; i < vars.length ; i++)
+		{
+			JSONObject temp = new JSONObject();
+			double[] raw = c.eval(envName +"$"+ vars[i]+"$value" ).asDoubles();
+			double[] fcst = c.eval(varName+"$fcst$"+envName+$"."+vars[i]+"[,'fcst']" ).asDoubles();
+			double[] lower = c.eval(varName+"$fcst$"+envName+"."+vars[i]+"[,'lower']" ).asDoubles();
+			double[] upper = c.eval(varName+"$fcst$"+envName+"."+vars[i]+"[,'upper']" ).asDoubles();
+			String[] date = c.eval("as.factor("+envName +"$"+ vars[i]+"$date)").asStrings();
+			
+			JSONArray jsonFcst = new JSONArray();
+			JSONArray jsonLower = new JSONArray();
+			JSONArray jsonUpper = new JSONArray();
+			JSONArray jsonDate = new JSONArray();
+			for(int j = 0 ; j < raw.length ; j++)
+			{
+				jsonFcst.put(raw[j]);
+				jsonLower.put(raw[j]);
+				jsonUpper.put(raw[j]);
+				jsonDate.put(date[j]);
+			}
+			
+			Calendar _cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date _date = sdf.parse(date[raw.length-1]);
+			_cal.setTime(_date);
+			
+			for(int j = 0 ; j < fcst.length ; j++)
+			{
+				jsonFcst.put(fcst[j]);
+				jsonLower.put(lower[j]);
+				jsonUpper.put(upper[j]);
+				
+				
+				_cal.add(Calendar.MONTH, 1);
+				jsonDate.put(sdf.format(_cal.getTime()));
+				
+			}
+			//temp.put("raw", jsonRaw);
+			temp.put("fcst", jsonFcst);
+			temp.put("lower", jsonLower);
+			temp.put("upper", jsonUpper);
+			temp.put("date", jsonDate);
+			obj.put(vars[i], temp);
+		}
+		
+		return obj;
+	}*/
 	
-	public JSONObject forecastVAR(int p, String type,  int ahead, double ci, String envName, String...vars ) throws ParseException, JSONException, REXPMismatchException
+	public JSONObject predictVAR(int p, String type,  int ahead, double ci, String envName, String cycle, String...vars ) throws ParseException, JSONException, REXPMismatchException
 	{
 		String args = "";
 		for(int i = 0 ; i < vars.length ; i++)
@@ -164,7 +227,7 @@ public class RConnector {
 		
 		// predictVAR <- function(df, p, type, ahead, ci)
 		c.eval(varName+" <-predictVAR(" +rawName+ ", "+ p +", '" +type+"'," + ahead+", " +ci+")");
-		//c.toPNG(new File("e:/r/"+System.nanoTime()+".png"), 1024, 768, "plot("+varName+");");
+
 		JSONObject obj = new JSONObject();
 		for(int i = 0 ; i < vars.length ; i++)
 		{
@@ -198,8 +261,14 @@ public class RConnector {
 				jsonLower.put(lower[j]);
 				jsonUpper.put(upper[j]);
 				
-				
-				_cal.add(Calendar.MONTH, 1);
+				if(cycle.equals("MM"))
+				{
+					_cal.add(Calendar.MONTH, 1);
+				}
+				else if(cycle.equals("DD"))
+				{
+					_cal.add(Calendar.DATE, 1);
+				}
 				jsonDate.put(sdf.format(_cal.getTime()));
 				
 			}
