@@ -20,7 +20,7 @@ function drawGraph(name, json, width, height)
 	
 	var xAxis = d3.svg.axis()
 	    .scale(x)
-	    .orient("bottom");
+	    .orient("bottom").ticks(9).tickFormat(d3.time.format('%Y/%m/%d'));
 	
 	var yAxis = d3.svg.axis()
 	    .scale(y)
@@ -45,9 +45,11 @@ function drawGraph(name, json, width, height)
     {
   	  var obj = {};
   	  obj["date"] = json.date[i];
-  	  obj["fcst"] = json.fcst[i];
-  	  obj["upper"] = json.upper[i];
   	  obj["lower"] = json.lower[i];
+  	  obj["upper"] = json.upper[i];
+  	  obj["fcst"] = json.fcst[i];
+  	  
+  	  
   	  
   	  data.push(obj);
     }
@@ -68,21 +70,21 @@ function drawGraph(name, json, width, height)
       };
     }); 
 
-     console.log("datas");
-     console.log(datas);
-
     x.domain(d3.extent(data, function(d) { return d.date; }));
 
-    console.log("xdomain");
     
     y.domain([
       d3.min(datas, function(c) { return d3.min(c.values, function(v) { return v.value; }); }),
       d3.max(datas, function(c) { return d3.max(c.values, function(v) { return v.value; }); })
     ]);
 
+    
+    
+    
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
+        
         .call(xAxis);
 
     
@@ -93,7 +95,7 @@ function drawGraph(name, json, width, height)
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
-        .style("text-anchor", "end")
+        .style("text-anchor", "end") 
         .text(name);
 
     
@@ -101,14 +103,11 @@ function drawGraph(name, json, width, height)
         .data(datas)
         .enter().append("g")
         .attr("class", "datas");
-        console.log("city");
-        console.log(city);
 
     city.append("path")
         .attr("class", "line")
         .attr("d", function(d) { return line(d.values); })
         .style("stroke", function(d) { return color(d.name); });
-    console.log("text");
     
     city.append("text")
         .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
