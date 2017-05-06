@@ -10,6 +10,7 @@ import org.rosuda.REngine.Rserve.RserveException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ import com.midtics.util.RConnector;
 @Controller
 @RequestMapping("v2")
 public class HomeV2Controller {
+	
+	@Value("${server.context-path}")
+	String context_path;
 
 	@Autowired
 	EcosRawLogService serviceEcosAllData;
@@ -63,6 +67,7 @@ public class HomeV2Controller {
 		
 		
 		ModelAndView mav = new ModelAndView("graph");
+		mav.addObject("context_path", context_path);
 		mav.addObject("category", category);
 		return mav;
 	}

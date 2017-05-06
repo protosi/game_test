@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
 body {
@@ -33,7 +34,7 @@ body {
 
 $(document).ready(function(){
 	//makeGraph();
-	$.ajax('/GameTest/v2/getStatData?category=<c:out value="${category}"/>').done(function(data){
+	$.ajax('<c:out value="${context_path}"/>/v2/getStatData?category=<c:out value="${category}"/>').done(function(data){
 		if(typeof data == 'string' )
 		{
 			data = JSON.parse(data);
@@ -52,8 +53,8 @@ function drawGraph(name, json)
 {
 	console.log(json);
 	var margin = {top: 20, right: 80, bottom: 30, left: 50},
-    width = 800 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = window.screen.width - margin.left - margin.right;
+    height = window.screen.width * 0.75 - margin.top - margin.bottom;
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 	

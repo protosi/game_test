@@ -27,18 +27,20 @@ public class EcosScheduler  implements ApplicationListener<ContextRefreshedEvent
 		Thread t1 = new Thread(statJob);
 		t1.start();
 		
-    }
-	
-	@Override
-	public void onApplicationEvent(ContextRefreshedEvent arg0) {
-		// TODO Auto-generated method stub
-		reportCurrentTime();
 		try {
 			bokUploader.insertEcosStatList();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+    }
+	
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent arg0) {
+		// TODO Auto-generated method stub
+		//reportCurrentTime();
+		
 	}
 
 }

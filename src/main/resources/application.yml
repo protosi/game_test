@@ -1,5 +1,5 @@
 server:
-  context-path: /GameTest
+  context-path: /rstat
   port: 80
   tomcat:
     max-threads: 50
