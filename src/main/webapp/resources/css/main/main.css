@@ -1,10 +1,13 @@
 @CHARSET "UTF-8";
-
+.jumbotron
+{
+	padding: 0;
+}
 .jumbotron_content
 {
-
     margin: auto;
-    background-color: rgba(255,255,255,0.5);
-    padding: 15px;
-    display: inline-block;'
+    background-color: rgba(0,0,0,0.5);
+    padding-top: 50px;
+    padding-bottom: 50px;
+ 	color: white;   
 }

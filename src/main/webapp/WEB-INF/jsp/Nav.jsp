@@ -3,7 +3,7 @@
 <nav class="navbar navbar-inverse nomargin scroll-header">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${context_path}/">알보통</a>
+			<a class="navbar-brand" href="${context_path}/">RINFO</a>
 		</div>
 		<ul class="nav navbar-nav">
 			<li><a href="./">Home</a></li>
