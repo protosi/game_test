@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+/* The side navigation menu */
+.nomargin
+{
+    margin-bottom: 0;
+    border-radius: 0px;
+}
