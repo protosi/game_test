@@ -20,7 +20,7 @@ function drawGraph(name, json, width, height)
 	
 	var xAxis = d3.svg.axis()
 	    .scale(x)
-	    .orient("bottom").ticks(9).tickFormat(d3.time.format('%Y/%m/%d'));
+	    .orient("bottom").ticks(6).tickFormat(d3.time.format('%Y/%m/%d'));
 	
 	var yAxis = d3.svg.axis()
 	    .scale(y)
