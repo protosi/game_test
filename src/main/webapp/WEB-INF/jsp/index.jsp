@@ -25,16 +25,14 @@
 		</p>
 		
 		<div class="adZone">
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		
 		<!-- 자동크기 0 반응형 -->
 		<ins class="adsbygoogle"
 		     style="display:block"
 		     data-ad-client="ca-pub-8851477327612550"
 		     data-ad-slot="3556251625"
 		     data-ad-format="auto"></ins>
-			<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
+			
 		</div>
 		
 		<div class="row">

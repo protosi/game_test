@@ -8,6 +8,13 @@
 <link rel="stylesheet" type="text/css" href="${context_path}/resources/css/bootstrap.css"></link>
 <link rel="stylesheet" type="text/css" href="${context_path}/resources/css/main/main.css"></link>
 <link rel="stylesheet" type="text/css" href="${context_path}/resources/css/nav/nav.css"></link>
+
+<!-- adsense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<!-- analytics -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
