@@ -13,6 +13,8 @@ spring:
   datasource:
     username: stat_user
     password: stateoqkr!@
+    #driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    #url: jdbc:log4jdbc:mysql://13.124.121.91:3306/db_stock?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf8   
     url: jdbc:mysql://13.124.121.91:3306/db_stock?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf8   
 
 # Rserve Connection 
@@ -21,6 +23,10 @@ R:
   port: 6311
   id: user
   password: midew23kK!
+  
+reCaptcha:
+  url: https://www.google.com/recaptcha/api/siteverify
+  secret: 6LfmUSAUAAAAAAw1pwbsZbePF8xEH4w2xsm0Obvb
          
 #      
 # Mybatis Configuration

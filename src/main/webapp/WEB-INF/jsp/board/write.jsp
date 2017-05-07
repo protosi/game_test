@@ -5,13 +5,9 @@
 <head>
 <%@include file="../header.jsp" %>
 <script src="${context_path}/resources/js/ckeditor/ckeditor.js"></script>
+<script src="${context_path}/resources/js/board/write.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <link rel="stylesheet" type="text/css" href="${context_path}/resources/css/board/write.css"></link>
-<script>
-	// Replace the <textarea id="editor1"> with a CKEditor
-	// instance, using default configuration.
-	$(document).ready(function(){CKEDITOR.replace( 'textarea' )});
-</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -29,7 +25,7 @@
 		     data-ad-slot="3556251625"
 		     data-ad-format="auto"></ins>
 		</div>
-		<form>
+		<form action="${context_path}/board/api/insert" method="post">
 			<div class="form-group row">
 				<label for="title" class="col-sm-2 col-form-label">Title</label>
 				<div class="col-sm-10">
@@ -51,7 +47,7 @@
 			<div class="form-group row">
 				<label for="textarea" class="col-sm-2 col-form-label">Context</label>
 				<div class="col-sm-10">
-				<textarea name="editor1" id="textarea" rows="10" cols="80" name="textarea"></textarea>
+				<textarea name="content" id="textarea" rows="10" cols="80" name="textarea"></textarea>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -63,7 +59,7 @@
 					<button type="button" class="btn btn-warning col-sm-12">취소</button>
 				</div>
 				<div class="col-sm-3 text-right">
-					<button type="button" class="btn btn-info col-sm-12">등록</button>
+					<button type="button" class="btn btn-info col-sm-12" onclick="insert();">등록</button>
 				</div>
 			</div>
 			

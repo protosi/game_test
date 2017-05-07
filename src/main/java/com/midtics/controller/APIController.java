@@ -40,4 +40,5 @@ public class APIController {
 		
 		return serviceEcosStatLog.selectLastOne(category).getValue();
 	}	
+	
 }

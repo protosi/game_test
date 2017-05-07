@@ -36,4 +36,6 @@ public class PageController {
 		mav.addObject("category", category);
 		return mav;
 	}
+	
+	
 }

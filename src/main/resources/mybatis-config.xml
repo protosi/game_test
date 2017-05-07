@@ -24,5 +24,6 @@
         <mapper resource="mybatis/mapper/stat_list.xml"/>
         <mapper resource="mybatis/mapper/stat_job_category.xml"/>
         <mapper resource="mybatis/mapper/stat_job_item.xml"/>
+        <mapper resource="mybatis/mapper/board.xml"/>
     </mappers>
 </configuration>
