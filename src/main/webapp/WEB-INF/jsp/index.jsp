@@ -39,11 +39,11 @@
 			</div>
 			<div class="col-sm-3" style="min-height: 600px;">
 				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- 와이드 스카이스크래퍼 -->
+				<!-- 큰 스카이 스크래퍼 -->
 				<ins class="adsbygoogle"
-				     style="display:inline-block;width:160px;height:600px"
+				     style="display:inline-block;width:300px;height:600px"
 				     data-ad-client="ca-pub-8851477327612550"
-				     data-ad-slot="3277050028"></ins>
+				     data-ad-slot="7428048029"></ins>
 				<script>
 				(adsbygoogle = window.adsbygoogle || []).push({});
 				</script>
