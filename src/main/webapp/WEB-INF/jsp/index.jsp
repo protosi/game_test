@@ -4,6 +4,7 @@
 <html>
 <head>
 	<%@include file="header.jsp" %>
+	<link rel="stylesheet" type="text/css" href="${context_path}/resources/css/main/main.css"></link>
 <title>RINFO: View Detail, Be Smart!</title>
 </head>
 <body>

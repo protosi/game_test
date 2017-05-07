@@ -17,9 +17,9 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="${context_path}/v2/graph?category=monthly_stat_01">Monthly Report 01</a></li>
-						<li><a href="${context_path}/v2/graph?category=monthly_stat_02">Monthly Report 02</a></li>
-						<li><a href="${context_path}/v2/graph?category=daily_stat_01">Daily Report 01</a></li>
+						<li><a href="${context_path}/graph?category=monthly_stat_01">Monthly Report 01</a></li>
+						<li><a href="${context_path}/graph?category=monthly_stat_02">Monthly Report 02</a></li>
+						<li><a href="${context_path}/graph?category=daily_stat_01">Daily Report 01</a></li>
 					</ul>
 				</li>
 				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">분석방법<span class="caret"></span></a>
@@ -30,7 +30,7 @@
 				</li>
 				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Board<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">게시판1</a></li>
+						<li><a href="${context_path}/board/write">게시판1</a></li>
 					</ul>
 				</li>
 				<li><a href="#">Contact us</a></li>
