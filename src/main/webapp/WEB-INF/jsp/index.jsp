@@ -37,7 +37,7 @@
 				<h3>보고</h3> 
 				<span>분석한 결과를 저장하고 WEB으로 제공함으로써, 언제 어디서나 통계 보고서를 편리하게 이용 가능합니다.</p>
 			</div>
-			<div class="col-sm-3">
+			<div class="col-sm-3" style="min-height: 600px;">
 				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 				<!-- 와이드 스카이스크래퍼 -->
 				<ins class="adsbygoogle"
