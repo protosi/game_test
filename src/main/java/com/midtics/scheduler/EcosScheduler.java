@@ -39,7 +39,7 @@ public class EcosScheduler  implements ApplicationListener<ContextRefreshedEvent
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
 		// TODO Auto-generated method stub
-		//reportCurrentTime();
+		reportCurrentTime();
 		
 	}
 
