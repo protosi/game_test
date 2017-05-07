@@ -12,7 +12,7 @@
 		</div>
 		<div class="collapse navbar-collapse"  id="bs-navbar">
 			<ul class="nav navbar-nav " id="bs-navbar">
-				<li><a href="./">Home</a></li>
+				<li><a href="${context_path}/">Home</a></li>
 				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">KOSPI
 						<span class="caret"></span>
 					</a>
