@@ -10,5 +10,7 @@ import com.midtics.mybatis.domain.Board;
 public interface BoardMapper {
 	
 	int insertBatch(List<Board> list);
+	List<Board> select();
+	int selectCount();
 
 }

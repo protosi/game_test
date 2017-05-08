@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.midtics.api.format.BasicFormat;
+import com.midtics.api.format.ListFormat;
 import com.midtics.component.RecaptchaComponent;
 import com.midtics.mybatis.domain.Board;
 import com.midtics.service.BoardService;
@@ -48,6 +50,51 @@ public class BoardController {
 		mav.addObject("category", category);
 		return mav;
 	}
+	
+	@RequestMapping("list")
+	ModelAndView list(HttpServletRequest request, HttpServletResponse response)
+	{
+		String category = request.getParameter("category");
+		
+		if(category == null)
+		{
+			category = "freeboard";
+		}
+		ModelAndView mav = new ModelAndView("board/list");
+		mav.addObject("context_path", context_path);
+		mav.addObject("category", category);
+		return mav;
+	}
+	
+	@RequestMapping("/api/select")
+	@ResponseBody
+	Object select(HttpServletRequest request)
+	{
+		ListFormat<Board> api = new ListFormat<Board>();
+		List<Board> list = serviceBoard.select();
+		String pageParam = request.getParameter("page");
+		int page = 1;
+		if(pageParam != null)
+		{
+			try
+			{
+				page = Integer.getInteger(pageParam);
+			}
+			catch(Exception e)
+			{
+				page = 1;
+			}
+		}
+		int total = serviceBoard.selectCount();
+		api.setCode(100);
+		api.setMsg("success");
+		api.setList(list, 10, page, total);
+		
+		return api;
+	}
+	
+	
+	
 	
 	@RequestMapping("/api/insert")
 	String insert(HttpServletRequest request)

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class ListFormat <T>{
 	
-	Result result;
-	ListRecv<T> recv;
+	Result result = new Result();
+	ListRecv<T> recv = new ListRecv<T>();
 	
 	public ListFormat()
 	{
@@ -25,8 +25,23 @@ public class ListFormat <T>{
 		recv.setList(list);
 		recv.setPage(page);
 		recv.setTotal(total);
+		recv.setList_size(list_size);
 	}
-	
+	public void setList(List<T> list, int list_size, int page, int total)
+	{
+		recv.setList(list);
+		recv.setPage(page);
+		recv.setTotal(total);
+		recv.setList_size(list_size);
+	}
+	public void setPage(int page)
+	{
+		recv.setPage(page);
+	}
+	public void setList(List<T> list)
+	{
+		recv.setList(list);
+	}
 	public void setCode(int code)
 	{
 		result.setCode(code);
@@ -36,7 +51,10 @@ public class ListFormat <T>{
 	{
 		result.setMsg(msg);
 	}
-	
+	public ListRecv<T> getRecv()
+	{
+		return recv;
+	}
 	public Result getResult() {
 		return result;
 	}
