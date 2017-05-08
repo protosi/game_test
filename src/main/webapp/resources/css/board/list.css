@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+.container
+{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.row
+{
+	margin-left: 0;
+	margin-right: 0;
+}
+td
+{
+	max-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+	
+}
+td a
+{
+	display:block;
+    height:100%;
+    width:100%;
+}
+.nodata
+{
+	padding-top:50px;
+	padding-bottom: 50px;
+	background-color: white;
+	text-align: center;
+	vertical-align: middle;
+	
+}
+.wd-sm-12
+{
+	width: 100%;
+}
+.wd-sm-11
+{
+	width: 91.663%;
+}
+.wd-sm-10
+{
+	width: 83.333%;
+}
+.wd-sm-9
+{
+	width: 75%;
+}
+.wd-sm-8
+{
+	width: 66.667%;
+}
+.wd-sm-7
+{
+	width: 58.333%;
+}
+.wd-sm-6
+{
+	width: 50%;
+}
+.wd-sm-4
+{
+	width: 33.333%;
+}
+.wd-sm-3
+{
+	width: 25%;
+}
+.wd-sm-2
+{
+	width: 16.667%;
+}
+.wd-sm-1
+{
+	width: 8.333%;
+}

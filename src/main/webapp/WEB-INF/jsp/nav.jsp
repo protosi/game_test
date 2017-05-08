@@ -30,7 +30,7 @@
 				</li>
 				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Board<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="${context_path}/board/write">게시판1</a></li>
+						<li><a href="${context_path}/board/list">게시판1</a></li>
 					</ul>
 				</li>
 				<li><a href="#">Contact us</a></li>

@@ -11,41 +11,43 @@ function insert()
 {
 	var rawParam = $('form').serializeArray();
 	var param = {};
-	for(var i = 0 ; i < rawParam.lengh ; i++)
+	for(var i = 0 ; i < rawParam.length ; i++)
 	{
 		var name = rawParam[i]["name"];
 		var value = rawParam[i]["value"].trim();
 		param[name] = value;
 		
-		if(value == '')
-		{
-			$('input[name="'+name+'"]').focus();
-		}
+
 	}
 	
 	if(param["title"] == "")
 	{
 		alert("제목을 입력해주세요.");
+		$('input[name="title"]').focus();
 		return;
 	}
 	if(param["username"] == "")
 	{
 		alert("이름을 입력해주세요.");
+		$('input[name="username"]').focus();
 		return;
 	}
 	if(param["password"] == "")
 	{
 		alert("비밀번호를 입력해주세요.");
+		$('input[name="password"]').focus();
 		return;
 	}
 	if(param["content"] == "")
 	{
 		alert("비밀번호를 입력해주세요.");
+		$('input[name="content"]').focus();
 		return;
 	}
 	if(param["g-recapcha-response"] == "")
 	{
 		alert("리캡차를 선택해주세요.");
+		$('input[name="g-recapcha-response"]').focus();
 		return;
 	}
 	
