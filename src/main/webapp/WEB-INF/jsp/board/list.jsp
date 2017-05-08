@@ -25,9 +25,25 @@
 		     data-ad-slot="3556251625"
 		     data-ad-format="auto"></ins>
 		</div>
-		<div class="wd-sm-12 text-right">
-			<a href="write?category=${category}" class="btn btn-info" >글쓰기z</a>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="제목 또는 본문 검색"/>
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">검색</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-8 text-right">
+				<div class="form-group">
+					<a href="write?category=${category}" class="btn btn-info" >글쓰기z</a>
+				</div>
+			</div>
 		</div>
+		
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -50,7 +66,17 @@
 			
 		    </tbody>
 		</table>
-		
+		<div class="form-group text-center ng-hide"  ng-show="data.recv.list.length > 0">
+			<ul class="pagination" >
+				<li><a href="./list?page=1&category=${category}">Prev</a></li> 
+				<li ng-show="data.recv.page >= 3"><a href="./list?page={{data.recv.page - 2}}&category=${category}">{{data.recv.page - 2}}</a></li>
+				<li ng-show="data.recv.page >= 2"><a href="./list?page={{data.recv.page - 1}}&category=${category}">{{data.recv.page - 1}}</a></li>
+				<li><a href="./list?page={{data.recv.page}}&category=${category}">{{data.recv.page}}</a></li>
+				<li ng-show="total > list_size * page" ><a href="./list?page={{data.recv.page + 1}}&category=${category}">{{data.recv.page + 1}}</a></li>
+				<li ng-show="total > list_size * (page + 1)" ><a href="./list?page={{data.recv.page +2}}&category=${category}">{{data.recv.page + 2}}</a></li>
+				<li><a href="./list?page={{Math.floor((data.recv.total - 1) / list_size)+1}}&category=${category}">Next</a></li>
+			</ul>
+		</div>
 	</div>
 
 
