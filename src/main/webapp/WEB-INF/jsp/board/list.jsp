@@ -39,7 +39,7 @@
 			
 			<div class="col-sm-8 text-right">
 				<div class="form-group">
-					<a href="write?category=${category}" class="btn btn-info" >글쓰기z</a>
+					<a href="write?category=${category}" class="btn btn-info" >글쓰기</a>
 				</div>
 			</div>
 		</div>

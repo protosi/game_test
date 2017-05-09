@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
 	CKEDITOR.replace( 'textarea' );
-	CKEDITOR.config.height=500;
+	CKEDITOR.config.height=300;
 });
 
 
@@ -19,6 +19,7 @@ function insert()
 		
 
 	}
+	
 	
 	if(param["title"] == "")
 	{
@@ -38,10 +39,10 @@ function insert()
 		$('input[name="password"]').focus();
 		return;
 	}
-	if(param["content"] == "")
+	if(CKEDITOR.instances.textarea.getData().length == 0)
 	{
-		alert("비밀번호를 입력해주세요.");
-		$('input[name="content"]').focus();
+		alert("내용을 입력해주세요.");
+		CKEDITOR.instances.textarea.focus();
 		return;
 	}
 	if(param["g-recapcha-response"] == "")

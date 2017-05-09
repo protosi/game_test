@@ -52,14 +52,14 @@
 			</div>
 			<div class="form-group row">
 				<label for="captcha" class="col-sm-2 col-form-label">Validate</label>
-				<div class="col-sm-4">
+				<div class="col-sm-4 form-group">
 					<div class="g-recaptcha" data-sitekey="6LfmUSAUAAAAAJ9EE4h11-PpCGD-tOb1fxOcDXM6"></div>
 				</div>
-				<div class="col-sm-3 text-right ">
-					<button type="button" class="btn btn-warning col-sm-12">취소</button>
+				<div class="col-sm-3 text-right form-group">
+					<button type="button" class="btn btn-warning">취소</button>
 				</div>
-				<div class="col-sm-3 text-right">
-					<button type="button" class="btn btn-info col-sm-12" onclick="insert();">등록</button>
+				<div class="col-sm-3 text-right form-group">
+					<button type="button" class="btn btn-info" onclick="insert();">등록</button>
 				</div>
 			</div>
 			
