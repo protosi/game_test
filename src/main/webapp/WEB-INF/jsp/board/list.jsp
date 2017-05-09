@@ -72,9 +72,10 @@
 				<li ng-show="data.recv.page >= 3"><a href="./list?page={{data.recv.page - 2}}&category=${category}">{{data.recv.page - 2}}</a></li>
 				<li ng-show="data.recv.page >= 2"><a href="./list?page={{data.recv.page - 1}}&category=${category}">{{data.recv.page - 1}}</a></li>
 				<li><a href="./list?page={{data.recv.page}}&category=${category}">{{data.recv.page}}</a></li>
-				<li ng-show="total > list_size * page" ><a href="./list?page={{data.recv.page + 1}}&category=${category}">{{data.recv.page + 1}}</a></li>
-				<li ng-show="total > list_size * (page + 1)" ><a href="./list?page={{data.recv.page +2}}&category=${category}">{{data.recv.page + 2}}</a></li>
-				<li><a href="./list?page={{Math.floor((data.recv.total - 1) / list_size)+1}}&category=${category}">Next</a></li>
+				<li ng-show="data.recv.total > data.recv.list_size * data.recv.page" ><a href="./list?page={{data.recv.page + 1}}&category=${category}">{{data.recv.page + 1}}</a></li>
+				<li ng-show="data.recv.total > data.recv.list_size * (data.recv.page + 1)" ><a href="./list?page={{data.recv.page +2}}&category=${category}">{{data.recv.page + 2}}</a></li>
+				<li><a href="./list?page={{Math.floor((data.recv.total - 1) / data.recv.list_size)+1}}&category=${category}">Next</a></li>
+
 			</ul>
 		</div>
 	</div>

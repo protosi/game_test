@@ -10,13 +10,21 @@
 			`writer`, `reg_date`, `viewcount` 
 		FROM 
 			`db_stock`.`tb_board_list` 
-		ORDER BY `grpno` DESC, `grpord` ASC LIMIT 0, 10;
+		ORDER BY `grpno` DESC, `grpord` ASC LIMIT #{offset}, #{limit};
 	</select>
 	<select id="selectCount" resultType="java.lang.Integer">
 	SELECT 
 		count(1) as `count` 
 	FROM
 		`db_stock`.`tb_board_list`
+	</select>
+	<select id="selectById" resultType="board">
+		SELECT
+			id, grpno, grpord, depth, category, title, content, writer, viewcount, reg_date
+		FROM
+			`db_stock`.`tb_board_list`
+		WHERE
+			`id` = #{id};
 	</select>
     <insert id="insertBatch" parameterType="Board">
     	INSERT IGNORE INTO `db_stock`.`tb_board_list`

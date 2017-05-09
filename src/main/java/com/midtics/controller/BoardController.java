@@ -66,29 +66,55 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping("read")
+	ModelAndView read(HttpServletRequest request, HttpServletResponse response)
+	{
+		String category = request.getParameter("category");
+		String id = request.getParameter("id");
+		Board board = null;
+		if(id != null)
+		{
+			board = serviceBoard.selectById(id);
+		}
+		if(category == null)
+		{
+			category = "freeboard";
+		}
+		ModelAndView mav = new ModelAndView("board/read");
+		mav.addObject("context_path", context_path);
+		mav.addObject("category", category);
+		mav.addObject("board", board);
+		
+		return mav;
+	}
+	
 	@RequestMapping("/api/select")
 	@ResponseBody
 	Object select(HttpServletRequest request)
 	{
 		ListFormat<Board> api = new ListFormat<Board>();
-		List<Board> list = serviceBoard.select();
+		
 		String pageParam = request.getParameter("page");
 		int page = 1;
+		int list_size = 10;
 		if(pageParam != null)
 		{
 			try
 			{
-				page = Integer.getInteger(pageParam);
+				System.out.println(pageParam);
+				page = Integer.parseInt(pageParam);
 			}
 			catch(Exception e)
 			{
+				e.printStackTrace();
 				page = 1;
 			}
 		}
+		List<Board> list = serviceBoard.select(page, list_size);
 		int total = serviceBoard.selectCount();
 		api.setCode(100);
 		api.setMsg("success");
-		api.setList(list, 10, page, total);
+		api.setList(list, list_size, page, total);
 		
 		return api;
 	}
@@ -138,7 +164,7 @@ public class BoardController {
 			
 			return "redirect:"+ referer;
 		}
-		return "redirect:"+"/board/write";
+		return "redirect:"+"/board/list";
 	}
 
 }

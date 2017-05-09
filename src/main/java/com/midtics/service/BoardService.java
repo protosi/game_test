@@ -18,10 +18,15 @@ public class BoardService {
 	{
 		return boardMapper.insertBatch(list);
 	}
-	public List<Board> select()
+	public List<Board> select(int page, int list_size)
 	{
-		return boardMapper.select();
+		return boardMapper.select((page - 1) * list_size, list_size);
 	}
+	public Board selectById(String id)
+	{
+		return boardMapper.selectById(id);
+	}
+	
 	public int selectCount()
 	{
 		return boardMapper.selectCount();
