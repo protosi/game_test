@@ -312,14 +312,15 @@ public class RConnector {
 		{
 			//REXP exp =  c.eval("vars::causality("+var_name+", cause = \"" +envName +"."+ var+".value"+"\")");
 			REXP exp =  c.eval("vars::causality("+var_name+", cause = \"" + var+"\")");
-			array.put(getJSONObjectFormREXP(exp));
+			array.put(getJSONObjectFormREXP(exp, var));
 		}
 
 		return array;
 	}
-	public JSONObject getJSONObjectFormREXP(Object exp) throws REXPMismatchException, JSONException
+	public JSONObject getJSONObjectFormREXP(Object exp, String var) throws REXPMismatchException, JSONException
 	{
 		JSONObject obj = new JSONObject();
+		obj.put("name", var);
 		RList list = null;
 		if(exp instanceof REXPGenericVector)
 		{
@@ -338,11 +339,11 @@ public class RConnector {
 				
 				if(val instanceof REXPGenericVector)
 				{
-					obj.put(key, getJSONObjectFormREXP(val));
+					obj.put(key, getJSONObjectFormREXP(val, var));
 				}
 				else if(val instanceof RList)
 				{
-					obj.put(key, getJSONObjectFormREXP(val));
+					obj.put(key, getJSONObjectFormREXP(val, var));
 				}
 				else if(val instanceof REXPString)
 				{

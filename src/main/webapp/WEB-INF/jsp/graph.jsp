@@ -4,11 +4,13 @@
 <html>
 	<head>
 		<%@include file="header.jsp" %>
+		<script src="${context_path}/resources/js/angular.min.js"></script>
 		<script src="${context_path}/resources/js/d3.v3.js"></script>
 		<script src="${context_path}/resources/js/graph/graph.js"></script>
 		<link rel="stylesheet" type="text/css" href="${context_path}/resources/css/graph/graph.css"></link>
 	<script>
 		var context_path = "${context_path}";
+		
 		$(document).ready(function(){
 			//makeGraph();
 			$.ajax("${context_path}/v2/getStatData?category=${category}").done(function(data){
@@ -16,6 +18,7 @@
 				{
 					data = JSON.parse(data);
 				}
+				setData(data);
 				var names = Object.getOwnPropertyNames(data["graph"]);
 				var width = $('div.container-graph').width();
 				var height = width < 600 ? 300 : width * 0.5;
@@ -32,7 +35,7 @@
 <body>
 	<%@include file="nav.jsp" %>
 	
-	<div class="container">
+	<div class="container" ng-app="myApp" ng-controller="listController">
 		<div class="page-header">
 			<h1>KOSPI Report</h1>
 			<p><strong>Stat Code: </strong>${category}</p>
@@ -45,6 +48,31 @@
 		     data-ad-slot="3556251625"
 		     data-ad-format="auto"></ins>
 		</div>
+		
+		<table class="table table-bordered ng-hide" ng-show="data.causality.length > 0">
+			<tbody>
+				
+				<tr ng-repeat-start="row in data.causality">
+					<th rowspan="4">{{row.name}}</th>
+					<th>Granger causality</th><td colspan="5">{{row.Granger.method}}</td>
+				</tr>
+				<tr>
+					<th>F-Test</th><td>{{row.Granger.statistic}}</td>
+					<th>DF</th><td>{{row.Granger.parameter}}</td>
+					<th>P-Value</th><td>{{row.Granger["p.value"]}}</td>
+				</tr>
+				<tr>
+					<th>Instant causality</th><td colspan="5">{{row.Instant.method}}</td>
+				</tr>
+				<tr ng-repeat-end>
+					<th>Chi-squared</th><td>{{row.Instant.statistic}}</td>
+					<th>DF</th><td>{{row.Instant.parameter}}</td>
+					<th>P-Value</th><td>{{row.Instant["p.value"]}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
 		<div class="container-graph">
 	
 		</div>

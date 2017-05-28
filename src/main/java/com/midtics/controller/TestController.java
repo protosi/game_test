@@ -57,7 +57,7 @@ public class TestController {
 		
 		
 		
-		REXP exp =  session.eval("causality(var.2c, cause = \"e\", vcov.=vcovHC(var.2c))");
+		REXP exp =  session.eval("causality(var.2c, cause = \"e\")");
 		rconnector.close();
 	
 		RList list = exp.asList();

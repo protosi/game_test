@@ -1,6 +1,14 @@
-/**
- * 
- */
+var myApp = angular.module('myApp', []);
+myApp.controller('listController', function($scope, $http)
+{
+	$scope.data = {};
+});
+function setData(data)
+{
+	angular.element($('[ng-app="myApp"]')).scope().data = data;
+	angular.element($('[ng-app="myApp"]')).scope().$apply();
+}
+
 function drawGraph(name, json, width, height)
 {
 
