@@ -16,12 +16,12 @@
 				{
 					data = JSON.parse(data);
 				}
-				var names = Object.getOwnPropertyNames(data);
+				var names = Object.getOwnPropertyNames(data["graph"]);
 				var width = $('div.container-graph').width();
 				var height = width < 600 ? 300 : width * 0.5;
 				for(var i = 0 ; i < names.length ; i++)
 				{
-					drawGraph(names[i], data[names[i]], width, height);
+					drawGraph(names[i], data["graph"][names[i]], width, height);
 				}
 			}
 			);

@@ -1,11 +1,11 @@
 package com.midtics.util;
 
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -13,7 +13,12 @@ import org.codehaus.jettison.json.JSONObject;
 import org.math.R.RserverConf;
 import org.math.R.Rsession;
 import org.rosuda.REngine.REXP;
+import org.rosuda.REngine.REXPDouble;
+import org.rosuda.REngine.REXPGenericVector;
+import org.rosuda.REngine.REXPInteger;
 import org.rosuda.REngine.REXPMismatchException;
+import org.rosuda.REngine.REXPString;
+import org.rosuda.REngine.RList;
 import org.rosuda.REngine.Rserve.RserveException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -211,24 +216,33 @@ public class RConnector {
 	public JSONObject predictVAR(int p, String type,  int ahead, double ci, String envName, String cycle, String...vars ) throws ParseException, JSONException, REXPMismatchException
 	{
 		String args = "";
+		String rawName = envName +"$raw.df";
+		String rawRename = envName +"$raw.renamedf";
+		String varName = envName + "$var";
+		String varModelName = envName + "$varModel";
+		JSONObject obj = new JSONObject();
+		JSONObject graph = new JSONObject();
+		
+		String names = "";
 		for(int i = 0 ; i < vars.length ; i++)
 		{
 			if(i != 0)
 			{
+				names += ", ";
 				args += ", ";
 			}
 			//vars[i] = envName +"$"+ vars[i];
 			args += envName +"$"+ vars[i]+"$value";
-			
+			names += vars[i] +"=" + envName +"$"+ vars[i]+"$value";
 		}
-		String rawName = envName +"$raw.df";
-		String varName = envName + "$var";
-		c.eval(rawName +"<-data.frame("+args+")");
-		
-		// predictVAR <- function(df, p, type, ahead, ci)
-		c.eval(varName+" <-predictVAR(" +rawName+ ", "+ p +", '" +type+"'," + ahead+", " +ci+")");
 
-		JSONObject obj = new JSONObject();
+		c.eval(rawName +"<-data.frame("+args+")");
+		c.eval(rawRename +"<-data.frame("+names+")");
+		// predictVAR <- function(df, p, type, ahead, ci)
+		c.eval(varModelName+" <-getVAR(" +rawRename+ ", "+ p +", '" +type+"')");
+		
+		c.eval(varName+" <-predictVAR(" +rawName+ ", "+ p +", '" +type+"'," + ahead+", " +ci+")");
+		
 		for(int i = 0 ; i < vars.length ; i++)
 		{
 			JSONObject temp = new JSONObject();
@@ -277,11 +291,82 @@ public class RConnector {
 			temp.put("lower", jsonLower);
 			temp.put("upper", jsonUpper);
 			temp.put("date", jsonDate);
-			obj.put(vars[i], temp);
+			
+			
+			
+			
+			
+			graph.put(vars[i], temp);
+		}
+		obj.put("graph", graph);
+		
+		obj.put("causality", causality(varModelName, envName, vars));
+		return obj;
+	}
+	
+	public JSONArray causality(String var_name, String envName, String[] vars) throws REXPMismatchException, JSONException
+	{
+		JSONArray array = new JSONArray();
+		
+		for(String var : vars)
+		{
+			//REXP exp =  c.eval("vars::causality("+var_name+", cause = \"" +envName +"."+ var+".value"+"\")");
+			REXP exp =  c.eval("vars::causality("+var_name+", cause = \"" + var+"\")");
+			array.put(getJSONObjectFormREXP(exp));
+		}
+
+		return array;
+	}
+	public JSONObject getJSONObjectFormREXP(Object exp) throws REXPMismatchException, JSONException
+	{
+		JSONObject obj = new JSONObject();
+		RList list = null;
+		if(exp instanceof REXPGenericVector)
+		{
+			list = ((REXPGenericVector)exp).asList();
+		}
+		else if(exp instanceof RList)
+		{
+			list = (RList)exp;
+		}
+		if(list != null)
+		{
+			Set<String> keys = list.keySet();
+			for(String key : keys)
+			{
+				Object val = list.get(key);
+				
+				if(val instanceof REXPGenericVector)
+				{
+					obj.put(key, getJSONObjectFormREXP(val));
+				}
+				else if(val instanceof RList)
+				{
+					obj.put(key, getJSONObjectFormREXP(val));
+				}
+				else if(val instanceof REXPString)
+				{
+					obj.put(key, ((REXP)val).asString());
+				}
+				else if(val instanceof REXPDouble)
+				{
+					obj.put(key, ((REXP)val).asDouble());
+				}
+				else if(val instanceof REXPInteger)
+				{
+					obj.put(key, ((REXP)val).asInteger());
+				}
+				else
+				{
+					obj.put(key, ((REXP)val).asString());
+				}
+			}
 		}
 		
 		return obj;
 	}
+	
+	
 	public boolean makeDataFramefromRawData(String var_name,List<EcosRawLogAll> lists, String start_date, String end_date, String date_format, String seq, String envName)
 	{
 		String[] date = new String[lists.size()];

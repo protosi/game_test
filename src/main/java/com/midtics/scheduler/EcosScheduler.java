@@ -21,8 +21,8 @@ public class EcosScheduler  implements ApplicationListener<ContextRefreshedEvent
 	
 	@Scheduled(cron = "0 0 0 * * *")
     public void reportCurrentTime() {
-		Thread t = new Thread(bokUploader);
-		t.start();
+		/*Thread t = new Thread(bokUploader);
+		t.start();*/
 		
 		Thread t1 = new Thread(statJob);
 		t1.start();
@@ -39,7 +39,7 @@ public class EcosScheduler  implements ApplicationListener<ContextRefreshedEvent
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
 		// TODO Auto-generated method stub
-		//reportCurrentTime();
+		reportCurrentTime();
 		
 	}
 

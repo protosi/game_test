@@ -16,6 +16,10 @@ public class EcosStatLogService {
 	{
 		return statLogMapper.selectLastOne(category);
 	}
+	public EcosStatLog selectLastOneUntilDate(String category, String date)
+	{
+		return null;
+	}
 	public int insert(String category, String value)
 	{
 		return statLogMapper.insert(category, value);

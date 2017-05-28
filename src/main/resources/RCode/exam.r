@@ -1,10 +1,18 @@
-predictVAR <- function(df, p, type, ahead, ci)
+require(vars)
+require(MASS)
+require(zoo)
+
+getVAR <- function(df, p, type)
 {
 	inVar <- vars::VAR(df, lag.max=p, type=type);
+	return(inVar);
+}
+predictVAR <- function(df, p, type, ahead, ci)
+{
+	inVar <- getVAR(df, p, type);
 	inPredict<-stats::predict(inVar, n.ahead=ahead, ci=ci);
 	return(inPredict);
 } 
-
 makeDataFrame <- function(date, value , startDate, endDate, dateFormat, seq )
 {
 	

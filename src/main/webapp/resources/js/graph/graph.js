@@ -3,7 +3,7 @@
  */
 function drawGraph(name, json, width, height)
 {
-	console.log(json);
+
 	var margin = {top: 10, right: 40, bottom: 30, left: 50},
     width = width - margin.left - margin.right;
     height = height * 0.75 - margin.top - margin.bottom;
