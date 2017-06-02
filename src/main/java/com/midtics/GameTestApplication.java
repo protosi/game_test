@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class GameTestApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(GameTestApplication.class, args);   
 	}

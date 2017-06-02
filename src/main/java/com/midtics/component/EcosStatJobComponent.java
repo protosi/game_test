@@ -49,6 +49,7 @@ public class EcosStatJobComponent implements Runnable{
 	{
 		SimpleDateFormat sdf = null;
 		String step = "";
+		int season = 0;
 		try {
 			rconnector.initialize();
 		} catch (RserveException e1) {
@@ -58,13 +59,14 @@ public class EcosStatJobComponent implements Runnable{
 		if(Cycle.equals("MM"))
 		{
 			sdf = new SimpleDateFormat("yyyyMM");
-
+			season = 12;
 			step = "1 month";
 		}
 		else if(Cycle.equals("DD"))
 		{
 			sdf = new SimpleDateFormat("yyyyMMdd");
 			step = "1 day";
+			season = 7;
 		}
 		Date _date = new Date();
 		String end_date = sdf.format(_date);
@@ -82,8 +84,10 @@ public class EcosStatJobComponent implements Runnable{
 		String[] nameArray = new String[name.size()];
 		JSONObject json = null;
 		try {
-			json= rconnector.predictVAR(2, "both", 12, 0.60, envName, Cycle,
-					name.toArray(nameArray));
+			//json= rconnector.predictVAR(10, "both", 12, 0.60, envName, Cycle, name.toArray(nameArray));
+			
+			json =  rconnector.predictVECM("trend", "eigen", 3, season, 12, 0.6, envName, Cycle, name.toArray(nameArray));
+			
 			serviceEcosStatLog.insert(Category,json.toString());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

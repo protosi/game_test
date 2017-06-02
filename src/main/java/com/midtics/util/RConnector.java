@@ -146,30 +146,41 @@ public class RConnector {
 			c.eval(strRSource);
 		}
 	}
-	/*public JSONObject forecastVAR(String type, int h, String envName, String ...vars) throws REXPMismatchException, JSONException, ParseException
+	// predictVECM <- function(df, ecdet, type, k, season, ahead, ci)
+	public JSONObject predictVECM(String ecdet, String type, int k, int season, int ahead, double ci, String envName, String cycle, String...vars ) throws ParseException, JSONException, REXPMismatchException
 	{
 		String args = "";
+		String rawName = envName +"$raw.df";
+		String rawRename = envName +"$raw.renamedf";
+		String varName = envName + "$var";
+		String varModelName = envName + "$varModel";
+		JSONObject obj = new JSONObject();
+		JSONObject graph = new JSONObject();
+		
+		String names = "";
 		for(int i = 0 ; i < vars.length ; i++)
 		{
 			if(i != 0)
 			{
+				names += ", ";
 				args += ", ";
 			}
+			//vars[i] = envName +"$"+ vars[i];
 			args += envName +"$"+ vars[i]+"$value";
+			names += vars[i] +"=" + envName +"$"+ vars[i]+"$value";
 		}
-		String rawName = envName +"$raw.df";
-		String varName = envName + "$var";
+
 		c.eval(rawName +"<-data.frame("+args+")");
-		
-		c.eval(varName+" <-forecastVAR(" +rawName+ ", " +type+"'," + h+")");
-		
-		JSONObject obj = new JSONObject();
+		c.eval(rawRename +"<-data.frame("+names+")");
+		// predictVECM <- function(df, ecdet, type, k, season, ahead, ci)
+		c.eval(varModelName+" <-makeVARfromVECM(" +rawRename+ ", '"+ ecdet +"', '" +type+"'," + k + ", " + season +")");
+		c.eval(varName+" <-predictVECM(" +rawName+ ", '"+ ecdet +"', '" +type+"'," + k + ", " + season + ", " + ahead+", " +ci+")");
 		
 		for(int i = 0 ; i < vars.length ; i++)
 		{
 			JSONObject temp = new JSONObject();
 			double[] raw = c.eval(envName +"$"+ vars[i]+"$value" ).asDoubles();
-			double[] fcst = c.eval(varName+"$fcst$"+envName+$"."+vars[i]+"[,'fcst']" ).asDoubles();
+			double[] fcst = c.eval(varName+"$fcst$"+envName+"."+vars[i]+"[,'fcst']" ).asDoubles();
 			double[] lower = c.eval(varName+"$fcst$"+envName+"."+vars[i]+"[,'lower']" ).asDoubles();
 			double[] upper = c.eval(varName+"$fcst$"+envName+"."+vars[i]+"[,'upper']" ).asDoubles();
 			String[] date = c.eval("as.factor("+envName +"$"+ vars[i]+"$date)").asStrings();
@@ -197,8 +208,14 @@ public class RConnector {
 				jsonLower.put(lower[j]);
 				jsonUpper.put(upper[j]);
 				
-				
-				_cal.add(Calendar.MONTH, 1);
+				if(cycle.equals("MM"))
+				{
+					_cal.add(Calendar.MONTH, 1);
+				}
+				else if(cycle.equals("DD"))
+				{
+					_cal.add(Calendar.DATE, 1);
+				}
 				jsonDate.put(sdf.format(_cal.getTime()));
 				
 			}
@@ -207,11 +224,18 @@ public class RConnector {
 			temp.put("lower", jsonLower);
 			temp.put("upper", jsonUpper);
 			temp.put("date", jsonDate);
-			obj.put(vars[i], temp);
+			
+			
+			
+			
+			
+			graph.put(vars[i], temp);
 		}
+		obj.put("graph", graph);
 		
+		//obj.put("causality", causality(varModelName, envName, vars));
 		return obj;
-	}*/
+	}
 	
 	public JSONObject predictVAR(int p, String type,  int ahead, double ci, String envName, String cycle, String...vars ) throws ParseException, JSONException, REXPMismatchException
 	{

@@ -1,11 +1,59 @@
 require(vars)
 require(MASS)
 require(zoo)
-
+require(urca)
 getVAR <- function(df, p, type)
 {
 	inVar <- vars::VAR(df, lag.max=p, type=type);
 	return(inVar);
+}
+makeVARfromVECM <- function(df, ecdet, type, k, season)
+{
+	inVecm <-urca::ca.jo(df, ecdet=ecdet, type=type, K=k, season=season, spec="longrun");
+	r<-0;	
+	sm <- summary(inVecm);
+	length <- length(sm@cval[,1]);
+	
+	for(i in seq(1, length))
+	{
+		if(sm@teststat[i] < sm@cval[i, 1])
+		{
+			r = length - i;
+			break;
+		}
+	} 
+	inVar = vec2var(inVecm, r=r); 
+	return(inVar);
+}
+getVARfromVECM<-function(inVecm)
+{
+	r<-0;	
+	sm <- summary(inVecm);
+	length <- length(sm@cval[,1]);
+	
+	for(i in seq(1, length))
+	{
+		if(sm@teststat[i] < sm@cval[i, 1])
+		{
+			r = length - i;
+			break;
+		}
+	} 
+	inVar = vec2var(inVecm, r=r); 
+	return(inVar);
+}
+
+getVECM <- function(df, ecdet, type, k, season)
+{
+	inVecm <-urca::ca.jo(df, ecdet=ecdet, type=type, K=k, season=season, spec="longrun"); 
+	return(inVecm);
+}
+
+predictVECM <- function(df, ecdet, type, k, season, ahead, ci)
+{
+	inVar <- makeVARfromVECM(df, ecdet, type, k, season);
+	inPredict<-stats::predict(inVar, n.ahead=ahead, ci=ci);
+	return(inPredict);
 }
 predictVAR <- function(df, p, type, ahead, ci)
 {
