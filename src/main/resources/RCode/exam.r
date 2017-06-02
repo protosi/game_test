@@ -9,26 +9,23 @@ getVAR <- function(df, p, type)
 }
 makeVARfromVECM <- function(df, ecdet, type, k, season)
 {
+	varselect <- vars::VARselect(df, season=season);
+	print("############################################");
+	k= varselect$selection[1];
+	show(varselect);
+	print("############################################");
 	inVecm <-urca::ca.jo(df, ecdet=ecdet, type=type, K=k, season=season, spec="longrun");
-	r<-0;	
-	sm <- summary(inVecm);
-	length <- length(sm@cval[,1]);
-	
-	for(i in seq(1, length))
-	{
-		if(sm@teststat[i] < sm@cval[i, 1])
-		{
-			r = length - i;
-			break;
-		}
-	} 
+	r<-getRformVECM(inVecm);
 	inVar = vec2var(inVecm, r=r); 
 	return(inVar);
 }
-getVARfromVECM<-function(inVecm)
+getRformVECM <- function(inVecm)
 {
 	r<-0;	
 	sm <- summary(inVecm);
+	print("############################################");
+	show(sm);
+	print("############################################");
 	length <- length(sm@cval[,1]);
 	
 	for(i in seq(1, length))
@@ -39,6 +36,11 @@ getVARfromVECM<-function(inVecm)
 			break;
 		}
 	} 
+	return(r);
+}
+getVARfromVECM<-function(inVecm)
+{
+	r<-getRformVECM(inVecm);
 	inVar = vec2var(inVecm, r=r); 
 	return(inVar);
 }
