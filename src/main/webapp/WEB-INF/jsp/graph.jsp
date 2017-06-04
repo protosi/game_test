@@ -53,20 +53,25 @@
 			<tbody>
 				
 				<tr ng-repeat-start="row in data.causality">
-					<th rowspan="4">{{row.name}}</th>
-					<th>Granger causality</th><td colspan="5">{{row.Granger.method}}</td>
+					<th rowspan="8">{{row.name}}</th>
+					<th>Granger causality</th><td>{{row.Granger.method}}</td>
 				</tr>
 				<tr>
 					<th>F-Test</th><td>{{row.Granger.statistic}}</td>
+				<tr>
 					<th>DF</th><td>{{row.Granger.parameter}}</td>
+				</tr>
+				<tr>
 					<th>P-Value</th><td>{{row.Granger["p.value"]}}</td>
 				</tr>
 				<tr>
-					<th>Instant causality</th><td colspan="5">{{row.Instant.method}}</td>
+					<th>Instant causality</th><td>{{row.Instant.method}}</td>
+				</tr>
+					<th>Chi-squared</th><td>{{row.Instant.statistic}}</td>
+				<tr>
+					<th>DF</th><td>{{row.Instant.parameter}}</td>	
 				</tr>
 				<tr ng-repeat-end>
-					<th>Chi-squared</th><td>{{row.Instant.statistic}}</td>
-					<th>DF</th><td>{{row.Instant.parameter}}</td>
 					<th>P-Value</th><td>{{row.Instant["p.value"]}}</td>
 				</tr>
 			</tbody>

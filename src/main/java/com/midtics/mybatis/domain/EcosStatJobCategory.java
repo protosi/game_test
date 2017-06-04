@@ -4,9 +4,10 @@ public class EcosStatJobCategory {
 	
 	int id;
 	String category;
-	String Cycle;
+	String cycle;
 	String is_active;
 	String start_date;
+	String stat_function;
 	
 	public int getId() {
 		return id;
@@ -21,10 +22,10 @@ public class EcosStatJobCategory {
 		this.category = category;
 	}
 	public String getCycle() {
-		return Cycle;
+		return cycle;
 	}
 	public void setCycle(String cycle) {
-		Cycle = cycle;
+		this.cycle = cycle;
 	}
 	public String getIs_active() {
 		return is_active;
@@ -38,5 +39,10 @@ public class EcosStatJobCategory {
 	public void setStart_date(String start_date) {
 		this.start_date = start_date;
 	}
-	
+	public String getStat_function() {
+		return stat_function;
+	}
+	public void setStat_function(String stat_function) {
+		this.stat_function = stat_function;
+	}
 }

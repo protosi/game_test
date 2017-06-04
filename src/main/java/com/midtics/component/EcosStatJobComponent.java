@@ -45,7 +45,7 @@ public class EcosStatJobComponent implements Runnable{
 	@Autowired
 	RConnector rconnector;
 	
-	public void logJob(String Category, List<EcosStatJobItem> joblist, String Cycle, String start_date)
+	public void logJob(String Category, List<EcosStatJobItem> joblist, String Cycle, String start_date, String stat_function)
 	{
 		SimpleDateFormat sdf = null;
 		String step = "";
@@ -84,10 +84,14 @@ public class EcosStatJobComponent implements Runnable{
 		String[] nameArray = new String[name.size()];
 		JSONObject json = null;
 		try {
-			//json= rconnector.predictVAR(10, "both", 12, 0.60, envName, Cycle, name.toArray(nameArray));
-			
-			json =  rconnector.predictVECM("trend", "eigen", 3, season, 12, 0.6, envName, Cycle, name.toArray(nameArray));
-			
+			if(stat_function.equals("VAR"))
+			{
+				json= rconnector.predictVAR(10, "both", 12, 0.60, envName, Cycle, name.toArray(nameArray));
+			}
+			else if(stat_function.equals("VECM"))
+			{
+				json =  rconnector.predictVECM("trend", "eigen", 3, season, 12, 0.6, envName, Cycle, name.toArray(nameArray));
+			}
 			serviceEcosStatLog.insert(Category,json.toString());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -114,7 +118,7 @@ public class EcosStatJobComponent implements Runnable{
 		{
 			List<EcosStatJobItem> itemlist = serviceEcosJobItem.selectY(category.getId());
 			
-			logJob(category.getCategory(), itemlist , category.getCycle(), category.getStart_date());
+			logJob(category.getCategory(), itemlist , category.getCycle(), category.getStart_date(), category.getStat_function());
 		}
 	}
 	
