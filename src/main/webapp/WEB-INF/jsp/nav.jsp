@@ -17,9 +17,12 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="${context_path}/graph?category=monthly_stat_01">Monthly Report 01</a></li>
-						<li><a href="${context_path}/graph?category=monthly_stat_02">Monthly Report 02</a></li>
-						<li><a href="${context_path}/graph?category=daily_stat_01">Daily Report 01</a></li>
+						<li><a href="${context_path}/graph?category=var_monthly_01">VAR - Monthly 01</a></li>
+						<li><a href="${context_path}/graph?category=var_monthly_02">VAR - Monthly 02</a></li>
+						<li><a href="${context_path}/graph?category=var_daily_01">VAR - Daily 01</a></li>
+						<li><a href="${context_path}/graph?category=vecm_monthly_01">VECM - Monthly 01</a></li>
+						<li><a href="${context_path}/graph?category=vecm_monthly_02">VECM - Monthly 02</a></li>
+						<li><a href="${context_path}/graph?category=vecm_daily_01">VECM - Daily 01</a></li>
 					</ul>
 				</li>
 				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">분석방법<span class="caret"></span></a>
